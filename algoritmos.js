@@ -57,30 +57,11 @@ function gerarAleatoriosComEmbaralhamento(quantidade) {
 }
 
 function gerarAleatoriosOtimizado(quantidade) {
-    var vetor = [];
-
-    if(quantidade > 45) {
-        const numeros = Array.from({ length: 60 }, (_, i) => i + 1);
-
-        while (numeros.length > quantidade) {
-            const aleatorio = Math.floor(Math.random() * numeros.length);
-            numeros.splice(aleatorio, 1);
-        }
-
-        return numeros
+    if(quantidade < 45) {
+        return gerarAleatoriosComVetor(quantidade);
+    } else {
+        return gerarAleatoriosRemovendoItens(quantidade);
     }
-
-    while(vetor.length < quantidade) {
-        var aleatorio = Math.floor(Math.random() * 60 +1);
-
-        if(vetor.includes(aleatorio)) {
-            continue;
-        } else {
-            vetor.push(aleatorio);
-        }
-    }
-
-    return vetor;
 }
 
 function executa(quantidade, funcaoParametro, ...parametros) {
@@ -100,4 +81,5 @@ function fazTestes(quantidade) {
     executa(1000000, gerarAleatoriosComSet, quantidade);
     executa(1000000, gerarAleatoriosRemovendoItens, quantidade);
     executa(1000000, gerarAleatoriosComEmbaralhamento, quantidade);
+    executa(1000000, gerarAleatoriosOtimizado, quantidade);
 }
